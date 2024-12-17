@@ -1,6 +1,7 @@
 import cv2
 import sys
 import numpy
+import numpy as np
 
 PREVIEW  = 0  # Preview Mode
 BLUR     = 1  # Blurring Filter
@@ -31,7 +32,13 @@ while alive:
     if image_filter == PREVIEW:
         result = frame
     elif image_filter == CANNY:
-        result = cv2.Canny(frame, 80, 150)
+        result = cv2.Canny(frame, 80, 150) 
+        # Do sobel edge instead of canny with 3x3 kernel
+        # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # grad_x = cv2.Sobel(frame, cv2.CV_64F, 1, 0, ksize=3)
+        # grad_y = cv2.Sobel(frame, cv2.CV_64F, 0, 1, ksize=3)
+        # grad = np.sqrt(grad_x**2 + grad_y**2)
+        # result = cv2.convertScaleAbs(grad)
     elif image_filter == BLUR:
         result = cv2.blur(frame, (13, 13))
     elif image_filter == FEATURES:
